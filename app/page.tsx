@@ -1,54 +1,17 @@
-'use client';
+import { Suspense } from 'react';
+import TodoClient from './components/TodoClient';
 
-import { useState } from "react";
-
-export default function TodoTracker() {
-  const [tasks, setTasks] = useState<string[]>([]);
-  const [input, setInput] = useState("");
-
-  const addTask = () => {
-    if (input.trim() === "") return;
-    setTasks([...tasks, input]);
-    setInput("");
-  };
-
-  const removeTask = (indexToRemove: number) => {
-    setTasks(tasks.filter((_, index) => index !== indexToRemove));
-  };
-
+export default function HomePage() {
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">📝 Todo Tracker</h1>
+    <main className="p-6 space-y-4">
+      <h1 className="text-3xl font-bold">📝 Todo App</h1>
+      <p className="text-gray-600">
+        This is a static section rendered on the server. It doesn’t change unless the page reloads.
+      </p>
 
-      <div className="flex gap-2 mb-4">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter a task"
-          className="border p-2 flex-grow rounded"
-        />
-        <button
-          onClick={addTask}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Add
-        </button>
-      </div>
-
-      <ul className="list-disc pl-5">
-        {tasks.map((task, index) => (
-          <li key={index} className="mb-2 flex justify-between items-center">
-            <span>{task}</span>
-            <button
-              onClick={() => removeTask(index)}
-              className="ml-4 text-red-500 hover:text-red-700 text-sm"
-            >
-              ❌
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <Suspense fallback={<div>Loading todos...</div>}>
+        <TodoClient />
+      </Suspense>
+    </main>
   );
 }
