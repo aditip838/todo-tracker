@@ -5,7 +5,7 @@ import { countTasks } from '../actions/todoActions';
 
 export default function TodoClient() {
   const [todos, setTodos] = useState<string[]>([]);
-  const [taskCount, setTaskCount] = useState<number>(0);
+  const [taskCount, setTaskCount] = useState(0);
   const [input, setInput] = useState('');
 
   useEffect(() => {
